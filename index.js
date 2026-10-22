@@ -41,7 +41,7 @@
         for (const fn of ["jsx", "jsxs"]) {
           unpatches.push(
             patcher.instead(fn, runtime, (args, orig) =>
-              shouldHide(args[1]) ? null : orig(...args)
+              shouldHide(args[1]) ? orig(runtime.Fragment, {}) : orig(...args)
             )
           );
         }
@@ -51,7 +51,7 @@
       if (React) {
         unpatches.push(
           patcher.instead("createElement", React, (args, orig) =>
-            shouldHide(args[1]) ? null : orig(...args)
+            shouldHide(args[1]) ? orig(React.Fragment, null) : orig(...args)
           )
         );
       }
